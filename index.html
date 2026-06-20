@@ -1,21 +1,330 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
-<meta charset="UTF-8">
-<title>はじめてのサイト</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>もちもち社 | 時代を紡ぐ、明日を届ける新聞社</title>
+    <style>
+        /* --- リセット & 基本設定 --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+        }
+
+        :root {
+            --primary-color: #1a2e40; /* 信頼感のあるネイビー */
+            --accent-color: #f7c1cb;  /* 「ぼたもち」をイメージした桜色 */
+            --text-color: #333333;
+            --bg-light: #f9f9f9;
+            --white: #ffffff;
+        }
+
+        body {
+            color: var(--text-color);
+            background-color: var(--white);
+            line-height: 1.7;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: opacity 0.3s ease;
+        }
+        a:hover {
+            opacity: 0.8;
+        }
+
+        /* --- ヘッダー --- */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 4%;
+            background-color: var(--white);
+            border-bottom: 1px solid #eee;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary-color);
+            letter-spacing: 2px;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        /* --- メインビジュアル --- */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color) 60%, #2c4a66 100%);
+            color: var(--white);
+            padding: 100px 4%;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            opacity: 0.9;
+            margin-bottom: 30px;
+        }
+
+        /* --- コンテンツレイアウト --- */
+        .container {
+            max-width: 1200px;
+            margin: 60px auto;
+            padding: 0 4%;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* セクションタイトル */
+        .section-title {
+            font-size: 22px;
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 10px;
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* --- メインニュースエリア --- */
+        .news-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        @media (max-width: 480px) {
+            .news-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .news-card {
+            background: var(--white);
+            border-bottom: 1px solid #eee;
+            padding-bottom: 20px;
+        }
+
+        .news-thumb {
+            width: 100%;
+            height: 200px;
+            background-color: #ddd;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .news-date {
+            font-size: 13px;
+            color: #888;
+            margin-bottom: 5px;
+        }
+
+        .news-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: var(--text-color);
+            line-height: 1.4;
+        }
+
+        /* --- サイドバー（キャラクター＆会社概要） --- */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        /* キャラクター紹介カード */
+        .mascot-card {
+            background-color: var(--bg-light);
+            border-top: 4px solid var(--accent-color);
+            padding: 30px 20px;
+            text-align: center;
+            border-radius: 0 0 8px 8px;
+        }
+
+        .mascot-avatar {
+            width: 100px;
+            height: 100px;
+            background-color: var(--accent-color);
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px; /* 絵文字で代用 */
+        }
+
+        .mascot-name {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .mascot-desc {
+            font-size: 14px;
+            color: #555;
+            text-align: left;
+        }
+
+        /* 会社ミニ情報 */
+        .company-info-box {
+            background: var(--white);
+            border: 1px solid #eee;
+            padding: 25px;
+            border-radius: 6px;
+        }
+
+        .info-list dt {
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        .info-list dd {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 10px;
+            border-bottom: 1px dashed #eee;
+            padding-bottom: 5px;
+        }
+
+        /* --- フッター --- */
+        footer {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 40px 4%;
+            text-align: center;
+            font-size: 14px;
+            margin-top: 80px;
+        }
+
+        footer p {
+            opacity: 0.7;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
 
-<h1>こんにちは！</h1>
-<p>自分のサイトです。</p>
+    <header>
+        <div class="logo">もちもち社</div>
+        <nav>
+            <ul class="nav-menu">
+                <li><a href="#">ニュース</a></li>
+                <li><a href="#">社説・コラム</a></li>
+                <li><a href="#">キャラクター紹介</a></li>
+                <li><a href="#">会社概要</a></li>
+            </ul>
+        </nav>
+    </header>
 
-<img src="photo.jpg" width="300">
+    <section class="hero">
+        <div class="hero-content">
+            <h1>時代を紡ぐ、明日を届ける。</h1>
+            <p>もちもち社は、確かな報道と温かい視点で、社会の「いま」を誠実に伝える総合新聞社です。</p>
+        </div>
+    </section>
 
-<br><br>
+    <div class="container">
+        
+        <main>
+            <h2 class="section-title">主要ニュース <span>最新情報</span></h2>
+            <div class="news-grid">
+                <article class="news-card">
+                    <div class="news-thumb">主要ニュースイメージ</div>
+                    <div class="news-date">2026年6月21日</div>
+                    <a href="#" class="news-title">【経済】地元の伝統産業を未来へ、新しい技術との融合がもたらす可能性</a>
+                </article>
+                <article class="news-card">
+                    <div class="news-thumb">社会ニュースイメージ</div>
+                    <div class="news-date">2026年6月20日</div>
+                    <a href="#" class="news-title">【社会】地域コミュニティの再発見、人と人をつなぐ新しい広場が完成</a>
+                </article>
+                <article class="news-card">
+                    <div class="news-thumb">文化ニュースイメージ</div>
+                    <div class="news-date">2026年6月19日</div>
+                    <a href="#" class="news-title">【文化】「もちもち文学賞」今年の受賞作が決定、若き才能の挑戦</a>
+                </article>
+                <article class="news-card">
+                    <div class="news-thumb">国際ニュースイメージ</div>
+                    <div class="news-date">2026年6月18日</div>
+                    <a href="#" class="news-title">【国際】環境問題への新たなアプローチ、グローバルな共同プロジェクトが始動</a>
+                </article>
+            </div>
+        </main>
 
-<button onclick="alert('押された！')">
-ボタン
-</button>
+        <aside class="sidebar">
+            
+            <div class="mascot-card">
+                <div class="mascot-avatar">🍡</div> <div class="mascot-name">公式キャラクター：ぼたもち</div>
+                <p class="mascot-desc">
+                    もちもち社の公式マスコット。のんびり屋だけど、世の中の「おいしいニュース」を嗅ぎつける鼻は超一流。丸い体で、どんなに硬い話題も柔らかく噛み砕いて読者に届けます。
+                </p>
+            </div>
+
+            <div class="company-info-box">
+                <h3 style="font-size: 16px; margin-bottom: 15px; color: var(--primary-color);">会社情報</h3>
+                <dl class="info-list">
+                    <dt>社名</dt>
+                    <dd>株式会社 もちもち社</dd>
+                    <dt>創立</dt>
+                    <dd>2010年4月1日</dd>
+                    <dt>事業内容</dt>
+                    <dd>日刊新聞の普及、デジタルメディア運営、出版事業</dd>
+                </dl>
+            </div>
+
+        </aside>
+
+    </div>
+
+    <footer>
+        <div>© 2026 Mochi-Mochi Sha. All rights reserved.</div>
+        <p>本サイトに掲載の記事・写真の無断転載を禁じます。</p>
+    </footer>
 
 </body>
 </html>
